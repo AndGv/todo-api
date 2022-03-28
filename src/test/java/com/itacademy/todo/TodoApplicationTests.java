@@ -1,4 +1,4 @@
-package com.itacademy;
+package com.itacademy.todo;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
