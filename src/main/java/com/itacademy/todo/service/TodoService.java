@@ -1,6 +1,5 @@
 package com.itacademy.todo.service;
 
-import com.itacademy.todo.exception.FailedToCreateException;
 import com.itacademy.todo.exception.FailedToEditException;
 import com.itacademy.todo.model.Todo;
 import com.itacademy.todo.repo.TodoRepository;
@@ -24,21 +23,22 @@ public class TodoService {
     }
 
     public Todo updateTodo(Todo todo) {
-        return fetchCurrentUserTodoList().stream()
-                .filter(t -> t.getId().equals(todo.getId()))
-                .findFirst().map(todoRepository::save).orElseThrow(() -> new FailedToEditException("Failed to update " + todo.getId()));
+        Todo existingTodo = todoRepository.findById(todo.getId()).orElseThrow(() -> new FailedToEditException("Failed to update " + todo.getId() + ". Todo dosn't exist"));
+        if (!userService.fetchCurrentUser().getId().equals(existingTodo.getUserId())) {
+            throw new FailedToEditException("Failed to update " + todo.getId() + ". Access denied.");
+        }
+        return todoRepository.save(fillCurrentUserId(todo));
     }
 
     public Todo createTodo(Todo todo) {
-        if (userService.fetchCurrentUser().getId().equals(todo.getUserId())) {
-            return todoRepository.save(todo);
-        }
-        throw new FailedToCreateException("Presented userId is invalid");
+        return todoRepository.save(fillCurrentUserId(todo));
     }
 
     public void deleteTodo(Integer id) {
-        fetchCurrentUserTodoList().stream()
-                .filter(todo -> todo.getId().equals(id))
-                .findFirst().ifPresent(todoRepository::delete);
+        fetchCurrentUserTodoList().stream().filter(todo -> todo.getId().equals(id)).findFirst().ifPresent(todoRepository::delete);
+    }
+
+    private Todo fillCurrentUserId(Todo todo) {
+        return new Todo(todo, userService.fetchCurrentUser().getId());
     }
 }

@@ -1,8 +1,11 @@
 package com.itacademy.todo.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.itacademy.todo.repo.UserRepository;
-import jakarta.persistence.*;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "todo_user")

@@ -5,6 +5,7 @@ import com.itacademy.todo.service.TodoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -23,12 +24,12 @@ public class TodoController {
     }
 
     @PutMapping
-    public Todo updateTodo(@RequestBody Todo todo) {
+    public Todo updateTodo(@RequestBody @Valid Todo todo) {
         return todoService.updateTodo(todo);
     }
 
     @PostMapping
-    public Todo createTodo(@RequestBody Todo todo) {
+    public Todo createTodo(@RequestBody @Valid Todo todo) {
         return todoService.createTodo(todo);
     }
 

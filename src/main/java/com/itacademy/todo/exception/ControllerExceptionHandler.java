@@ -18,7 +18,7 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
         return handleException(ex, request, HttpStatus.NOT_FOUND, "User not found!");
     }
 
-    @ExceptionHandler({FailedToEditException.class, FailedToCreateException.class})
+    @ExceptionHandler({FailedToEditException.class})
     public ResponseEntity<Object> failedToEditExceptionHandler(RuntimeException ex, WebRequest request) {
         return handleException(ex, request, HttpStatus.BAD_REQUEST, ex.getMessage());
     }
