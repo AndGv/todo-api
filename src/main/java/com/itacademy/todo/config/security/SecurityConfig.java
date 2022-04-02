@@ -35,7 +35,7 @@ public class SecurityConfig {
                 .and()
                 .httpBasic()
                 .authenticationEntryPoint(basicAuthenticationEntryPoint);
-        http.cors();
+        http.cors().disable();
         http.csrf().disable();
         return http.build();
     }
