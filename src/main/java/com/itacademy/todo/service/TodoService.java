@@ -22,23 +22,23 @@ public class TodoService {
         return todoRepository.findAllByUserId(userService.fetchCurrentUser().getId());
     }
 
-    public Todo updateTodo(Todo todo) {
-        Todo existingTodo = todoRepository.findById(todo.getId()).orElseThrow(() -> new FailedToEditException("Failed to update " + todo.getId() + ". Todo dosn't exist"));
+    public Todo updateTodo(Integer id, Todo todo) {
+        Todo existingTodo = todoRepository.findById(id)
+                .orElseThrow(() -> new FailedToEditException("Failed to update " + id + ". Todo dosn't exist"));
         if (!userService.fetchCurrentUser().getId().equals(existingTodo.getUserId())) {
             throw new FailedToEditException("Failed to update " + todo.getId() + ". Access denied.");
         }
-        return todoRepository.save(fillCurrentUserId(todo));
+        todo.setId(id);
+        todo.setUserId(userService.fetchCurrentUser().getId());
+        return todoRepository.save(todo);
     }
 
     public Todo createTodo(Todo todo) {
-        return todoRepository.save(fillCurrentUserId(todo));
+        todo.setUserId(userService.fetchCurrentUser().getId());
+        return todoRepository.save(todo);
     }
 
     public void deleteTodo(Integer id) {
         fetchCurrentUserTodoList().stream().filter(todo -> todo.getId().equals(id)).findFirst().ifPresent(todoRepository::delete);
-    }
-
-    private Todo fillCurrentUserId(Todo todo) {
-        return new Todo(todo, userService.fetchCurrentUser().getId());
     }
 }

@@ -27,12 +27,27 @@ public class Todo {
     public Todo() {
     }
 
-    public Todo(Todo todo, Integer userId) {
-        this.id = todo.getId();
-        this.name = todo.getName();
-        this.description = todo.getDescription();
-        this.dueDate = todo.getDueDate();
-        this.done = todo.isDone();
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setDone(boolean done) {
+        this.done = done;
+    }
+
+    public void setDueDate(Date dueDate) {
+        this.dueDate = dueDate;
+    }
+
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 

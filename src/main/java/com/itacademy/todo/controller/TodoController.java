@@ -23,9 +23,9 @@ public class TodoController {
         return todoService.fetchCurrentUserTodoList();
     }
 
-    @PutMapping
-    public Todo updateTodo(@RequestBody @Valid Todo todo) {
-        return todoService.updateTodo(todo);
+    @PutMapping("/{id}")
+    public Todo updateTodo(@PathVariable Integer id, @RequestBody Todo todo) {
+        return todoService.updateTodo(id, todo);
     }
 
     @PostMapping
@@ -33,9 +33,9 @@ public class TodoController {
         return todoService.createTodo(todo);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteTodo(@RequestParam Integer id) {
+    public void deleteTodo(@PathVariable Integer id) {
         todoService.deleteTodo(id);
     }
 
