@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 public class Todo {
@@ -20,7 +20,8 @@ public class Todo {
     private String description;
     @Column(name = "isDone")
     private boolean done;
-    private Date dueDate;
+
+    private LocalDate dueDate;
     @JsonIgnore
     private Integer userId;
 
@@ -43,7 +44,7 @@ public class Todo {
         this.done = done;
     }
 
-    public void setDueDate(Date dueDate) {
+    public void setDueDate(LocalDate dueDate) {
         this.dueDate = dueDate;
     }
 
@@ -63,7 +64,7 @@ public class Todo {
         return description;
     }
 
-    public Date getDueDate() {
+    public LocalDate getDueDate() {
         return dueDate;
     }
 
